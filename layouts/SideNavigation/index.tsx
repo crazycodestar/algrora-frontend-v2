@@ -23,10 +23,9 @@ import {
 	closedContainerMixin,
 	DrawerHeader,
 } from "../common/styles";
+import { useMediaQuery } from "@mui/material";
 
-const Drawer = styled(MuiDrawer, {
-	shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
 	width: drawerWidth,
 	flexShrink: 0,
 	whiteSpace: "nowrap",
@@ -39,7 +38,7 @@ const Drawer = styled(MuiDrawer, {
 	}),
 	".MuiDrawer-paper": {
 		marginLeft: theme.spacing(2),
-		backgroundColor: theme.palette.secondary.main,
+		backgroundColor: theme.common.colors.light.main,
 		borderRight: "none",
 		marginTop: theme.spacing(2),
 		borderRadius: theme.common.borderRadius.sm,
@@ -63,6 +62,7 @@ const SideNavigation: React.FC<ISideNavigationProps> = ({
 	onSideNavigationToggle,
 }) => {
 	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up("md"));
 
 	const handleDrawerOpen = () => {
 		onSideNavigationToggle(true);
@@ -73,7 +73,12 @@ const SideNavigation: React.FC<ISideNavigationProps> = ({
 	};
 
 	return (
-		<Drawer variant="permanent" open={open}>
+		<Drawer
+			variant={matches ? "permanent" : "temporary"}
+			anchor={matches ? undefined : "left"}
+			onClose={handleDrawerClose}
+			open={open}
+		>
 			<DrawerHeader>
 				{open ? (
 					<IconButton onClick={handleDrawerClose}>

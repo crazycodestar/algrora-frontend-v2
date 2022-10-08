@@ -29,7 +29,7 @@ const NavItem: FC<INavItemProps> = ({ Icon, count, label }) => {
 				</Badge>
 				<Typography
 					variant="button"
-					color="primary"
+					color="MenuText"
 					sx={{
 						display: { xs: "block", md: "none" },
 					}}
